@@ -1,63 +1,66 @@
-import React, { useState } from 'react';
-import { View, TextInput, Button, FlatList, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState } from 'react';     // Importing Libraries
+import { View, TextInput, Button, FlatList, Text, 
+TouchableOpacity, StyleSheet } from 'react-native';//  Importing Components from React Native
 
-export default function App() {
-  const [task, setTask] = useState('');
-  const [tasks, setTasks] = useState([]);
+export default function App() {      
+  const [task, setTask] = useState('');     // for storing the current task input by the user
+  const [tasks, setTasks] = useState([]);   // for storing the list of tasks added by the user
 
-  const addTask = () => {
-    if (task.trim()) {
+  const addTask = () => {     // function to add a new task to the list
+    if (task.trim()) {        
       setTasks([...tasks, { id: Date.now().toString(), task: task }]);
-      setTask('');
+      setTask(''); 
     }
   };
 
-  const deleteTask = (id) => {
-    setTasks(tasks.filter(task => task.id !== id));
+  const deleteTask = (
+      id) => {  // function to delete a task from the list based on its id
+      setTasks(tasks.filter(task => task.id !== id));  
+    
   };
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.header}>To-Do List</Text>
+  return (  // The main UI of the app
+    <View style={styles.container}>   
+      <Text style={styles.header}>To-Do List</Text>   
       
       <TextInput
-        style={styles.input}
-        value={task}
-        onChangeText={setTask}
-        placeholder="Enter a task"
+      style={styles.input} // Input for entering a new task
+      value={task}  // The current value of the input 
+      onChangeText={setTask}  // Update the task state when the text changes 'i don't understand this'
+      placeholder="Enter a task"  // Placeholder text for input
       />
       
-      <Button title="Add Task" onPress={addTask} />
-      
-      <FlatList
-        data={tasks}
-        renderItem={({ item }) => (
-          <View style={styles.taskContainer}>
-            <Text style={styles.taskText}>{item.task}</Text>
-            <TouchableOpacity onPress={() => deleteTask(item.id)}>
-              <Text style={styles.deleteButton}>Delete</Text>
-            </TouchableOpacity>
-          </View>
-        )}
-        keyExtractor={(item) => item.id}
+      <Button title="Add Task" onPress={addTask} />   //* Button to add the task to the list**/
+
+      <FlatList  // List to display the tasks
+      data={tasks}
+      renderItem={({ item }) => (  // Render each task item
+      <View style={styles.taskContainer}>  // *Container for each task item**/
+      <Text style={styles.taskText}>{item.task}</Text> 
+      <TouchableOpacity onPress={()=>deleteTask(item.id)}>    //* Button to delete the task**/
+      <Text style={styles.deleteButton}>Delete</Text>
+      </TouchableOpacity>
+      </View>
+      )}
+      keyExtractor={(item)=>item.id}  // Unique key for each task item
       />
     </View>
   );
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create({  // Styles for the app components
   container: {
-    flex: 1,
-    padding: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
+    flex: 1,  // Take up the entire screen
+    padding: 40,  // Padding around the container
+    justifyContent: 'center',  // Center the content vertically
+    alignItems: 'center',  // Center the content horizontally
   },
-  header: {
-    fontSize: 30,
-    marginBottom: 20,
-    fontWeight: 'bold',
+  header: {  // Styles for the header text
+    fontSize: 40, 
+    marginBottom: 30, 
+    fontWeight: 'bold', 
   },
-  input: {
+  input: {  // Styles for the text input
     width: '100%',
     height: 40,
     borderColor: 'gray',
@@ -65,13 +68,14 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     marginBottom: 10,
   },
-  taskContainer: {
+  taskContainer: {  // Styles for each task item container
+    width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 10,
     padding: 10,
-    backgroundColor: '#147bc9da',
+    backgroundColor: '#53a2dfda',
     borderRadius: 5,
   },
   taskText: {
